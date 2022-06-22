@@ -15,7 +15,7 @@ const secret = BigInt('0x' + crypto.randomBytes(16).toString('hex').toString(10)
 console.log(secret)
 //console.log(typeof secret)
 
-var my_shares = generate_secret_shares(secret, threshold = 3, shares = 5)
+var my_shares = generate_secret_shares(secret, threshold = 7, shares = 10)
 console.log(my_shares)
 
 //const setic = new Set(my_shares)
@@ -42,6 +42,10 @@ function generate_secret_shares (secret, threshold, total_shares){
 	polynomial.push(BigInt(8666))
 	polynomial.push(BigInt(4762))
 	*/
+	/*polynomial.push(secret)
+	polynomial.push(BigInt(2879))
+	polynomial.push(BigInt(315))
+	polynomial.push(BigInt(2077))*/
 
 	console.log( polynomial)
 	//console.log( polynomial.reverse())
@@ -67,7 +71,7 @@ function evaluate_polynomial_at(polynomial, x_coord, modulus = PRIME){
 	//return x_coord + "_" + y_value 
 }
 
-var secret_shards = my_shares.slice(0, 3)
+var secret_shards = my_shares.slice(0, 7)
 //var secret_shards = new Set(my_shares.slice(0, 3))
 //var secret_shards = new Set()
 //secret_shards.add("4-1-4655")
@@ -183,7 +187,8 @@ function lagrange_interpolate(x_coords, y_coords){
 	}
 
 	console.log("Suma:", sum)
-	console.log("Reducirana suma:", sum % PRIME + PRIME)
+
+	console.log("Reducirana suma:", (sum % PRIME + PRIME) % PRIME  )
 
 }
 
@@ -191,16 +196,44 @@ function finite_division(numerator, denominator){
 	denominator_inverse = extended_greatest_common_divisior(denominator, PRIME)
 	
 	//dividing by denomintor value in finite field aritmetics means, multiplying the numerator by the denominators finite field inverse
-	return numerator * denominator_inverse
+	return numerator * denominator_inverse // % PRIME
 }
 
+
+//algoritam kopiran s wikipedije, no izmjenjen prema primjeru sa shamirove wikipedije, inače ne radi ispravno
 function extended_greatest_common_divisior(a, b){
 
 	let s = 0n 
 	let old_s = 1n
 
-	let t = 1n
-	let old_t = 0n
+	let old_r = a
+	let r = b
+
+	while (r != 0n){
+		let quotient = (old_r / r) >> 0n
+
+		let swap = r
+
+		//r = old_r - quotient * swap
+		r = (old_r + r) % r
+		old_r = swap
+
+		swap = s
+
+		s = old_s - quotient * swap
+		old_s = swap
+	}
+	
+	
+	console.log("a:", a)
+	console.log("inverse:", old_s)
+	return old_s;
+}
+
+/*function extended_greatest_common_divisior(a, b){
+
+	let s = 0n 
+	let old_s = 1n
 
 	let r = b
 	let old_r = a
@@ -210,32 +243,34 @@ function extended_greatest_common_divisior(a, b){
 
 		let swap = r
 
-		r = old_r - quotient * r
+		r = old_r - quotient * swap
+		//r = old_r % swap
 		old_r = swap
 
 		swap = s
 
-		s = old_s - quotient * s
+		s = old_s - quotient * swap
 		old_s = swap
 
-		swap = t
-
-		t = old_t - quotient * t
-		old_t = swap
 	}
 	
 	//console.log("a:", a)
 
 	//console.log("gcd:", r)
 	//console.log("gcd quotients:", t, s)
-
-	if(a < 0n){
+	
+	/*if(a < BigInt(0)){
+		console.log("a je negativan:", a)
+		console.log("stari ostatak s:", old_s)
 		old_s *= -1n
+		console.log("novi ostatak s:", old_s)
+
 	}
 	console.log("a:", a)
 	console.log("inverse:", old_s)
 	return old_s;
 }
+*/
 
 
 console.log(reconstructed_secret)
