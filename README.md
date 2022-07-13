@@ -1,7 +1,6 @@
 
-https://shields.io/
-
 ![npm bundle size](https://img.shields.io/bundlephobia/min/shamir-nemir-krumpir?style=flat-square)
+![NPM](https://img.shields.io/npm/l/shamir-nemir-krumpir?style=flat-square)
 
 <br />
 <p align="center">
@@ -22,14 +21,6 @@ https://shields.io/
     <a href="https://github.com/hrvoje459/shamir-nemir-krumpir/issues">Ask questions</a>
   </p>
 
-```bash
-git clone https://github.com/linuxserver/docker-budge.git
-cd docker-budge
-docker build \
-  --no-cache \
-  --pull \
-  -t lscr.io/linuxserver/budge:latest .
-```
 
 - [About](#about)
 - [Purpose](#purpose)
