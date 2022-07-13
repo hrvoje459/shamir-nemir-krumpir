@@ -8,27 +8,6 @@ const PRIME = BigInt("340282366920938463463374607431768211297"); //2 ** 128 - 15
 //const PRIME = BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639747"); //2**256 - 189
 
 
-//const secret = BigInt('0x' + crypto.randomBytes(16).toString('hex'))
-//const secret = BigInt('0x' + Buffer.from("hrvojeva tajna 1", "utf-8").toString('hex'))
-//const secret = BigInt('0x' + Buffer.from("hrvojeva tajna 12", "utf-8").toString('hex'))
-//console.log(secret)
-//console.log(Buffer.from(secret.toString(16), "hex").toString())
-
-
-
-
-//var my_shares = generate_secret_shares(secret, threshold = 3, shares = 5)
-//console.log(my_shares)
-
-
-//var secret_shards = new Set(my_shares.slice(0, 3))
-
-//console.log("Secret sharts: ", secret_shards)
-
-//var reconstructed_secret = recover_secret(secret_shards, PRIME)
-
-
-//console.log("Rekonstruirana tajna:", Buffer.from(reconstructed_secret.toString(16), "hex").toString())
 
 function generate_secret_shares(secret, threshold, total_shares) {
 	console.log(secret)
@@ -40,7 +19,7 @@ function generate_secret_shares(secret, threshold, total_shares) {
 
 	if (threshold > total_shares) {
 		console.error("Secret would be irrecoverable (threshold > total number of shares)")
-		exit(0)
+		return ""
 	}
 	polynomial = []
 	polynomial.push(secret)
@@ -109,7 +88,7 @@ function recover_secret(secret_shards, modulus = PRIME) {
 	if (shards_status != "") {
 		console.log(shards_status)
 		console.log("Secret unrecoverable")
-		exit(0);
+		return ""
 	}
 
 	var x_coords = []
@@ -125,7 +104,7 @@ function recover_secret(secret_shards, modulus = PRIME) {
 
 	var tajna = lagrange_interpolate(x_coords, y_coords)
 
-	return tajna
+	return Buffer.from(tajna.toString(16), "hex").toString()
 }
 
 
