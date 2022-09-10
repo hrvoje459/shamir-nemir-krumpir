@@ -8,13 +8,20 @@ const PRIME = BigInt("340282366920938463463374607431768211297"); //2 ** 128 - 15
 //const PRIME = BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639747"); //2**256 - 189
 
 function recover(secret_shards) {
-	console.log(secret_shards)
+
+
+	const shards_set = new Set(secret_shards)
+
+	var shards_status = check_shards(shards_set)
+	if (shards_status != "") {
+		console.log(shards_status)
+		console.log("Secret unrecoverable")
+		return ""
+	}
+	console.log("Reconstructing secret go brrrr")
 	var recovered_secret = ""
 
 	var num_of_chunks = secret_shards[0].split("-").length - 2
-
-	console.log(num_of_chunks)
-
 
 
 	for (let i = 0; i < num_of_chunks; i++) {
@@ -24,7 +31,6 @@ function recover(secret_shards) {
 
 		secret_shards.forEach(element => {
 			var tmp = element.split("-")
-			console.log(tmp)
 			x_coords.push(BigInt(tmp[1]))
 			y_coords.push(BigInt(tmp[i + 2]))
 		});
@@ -40,22 +46,14 @@ function recover(secret_shards) {
 function share(secret, threshold, total_shares) {
 
 	secret = Buffer.from(secret, "utf-8").toString('hex')
-	console.log("SECRET_BUFFER:_", secret)
-
-	console.log(secret[0, 1])
 
 	var split_secret = []
 
 	for (let i = 0; i < Math.ceil(secret.length / 32); i++) {
-		console.log(i)
 
-		//var longer_secret_shards = shamir.generate_secret_shares("1" + secret.substring(i * 15, i * 15 + 15), 3, 5)
-		console.log("TAJNA:_", secret.slice(i * 32, i * 32 + 32))
 		var begint = BigInt('0x' + secret.slice(i * 32, i * 32 + 32))
-		console.log(begint)
 		split_secret.push(begint)
 
-		console.log(split_secret)
 	}
 
 
@@ -66,7 +64,6 @@ function share(secret, threshold, total_shares) {
 		var shards = generate_secret_shares(split_secret[i], threshold, total_shares)
 
 
-		console.log(shards)
 		if (i == 0) {
 			for (let j = 0; j < shards.length; j++) {
 				returning_shards[j] = ""
@@ -82,22 +79,12 @@ function share(secret, threshold, total_shares) {
 		returning_shards[j] = threshold + "-" + (j + 1) + returning_shards[j]
 	}
 
-	console.log("RETURNING SHARDS:_", returning_shards)
 	return returning_shards
 
 }
 
 
 function generate_secret_shares(secret, threshold, total_shares) {
-	console.log(secret)
-	//if (typeof secret != "string" || secret.length > 16) {
-	//	console.log("Secret should be string <16 characters long")
-	//	return ""
-	//}
-
-	//console.log("STARI SECRET BUFFER:_", Buffer.from(secret, "utf-8").toString('hex'))
-	//secret = BigInt('0x' + Buffer.from(secret, "utf-8").toString('hex'))
-	console.log("SECRET:_", secret)
 
 	if (threshold > total_shares) {
 		console.error("Secret would be irrecoverable (threshold > total number of shares)")
@@ -183,7 +170,6 @@ function recover_secret(secret_shards, x_coords, y_coords, modulus = PRIME) {
 		y_coords.push(BigInt(tmp[2]))
 	});*/
 
-	console.log("Reconstructing secret go brrrr")
 
 	var tajna = lagrange_interpolate(x_coords, y_coords)
 

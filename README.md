@@ -55,15 +55,15 @@ Package has 2 features (functions):
 		let secret = "secret password"
 		
 		// generate 5 secret shares with threshold of 3 (any 3 unique secret shares are enough to recover original secret)
-		let secret_shares = shamir.generate_secret_shares(secret, 3, 5)
+		let secret_shares = shamir.share(secret, 3, 5)
 
 		console.log(secret_shares)
 		/* [
-  			'3-1-24634067712936637276585268816813007381',
-  			'3-2-270401633296391508677892950776518317210',
-  			'3-3-195571998463579249969035150340988926206',
-  			'3-4-140427530135438324613386474941993045666',
-  			'3-5-104968228311968732610946924579530675590'
+  			'3-1-252475164883435633949147032661227482573',
+  			'3-2-13825082332072541419477223100430137800',
+  			'3-3-305496023649819616729597760287575774328',
+  			'3-4-106640888073861469489384821927359758266',
+  			'3-5-97824409446075026625587622883318512208'
 		] */
 	```
  - recovering original secret from secret shares
@@ -72,7 +72,7 @@ Package has 2 features (functions):
 		let secret_shares_subset = secret_shares.slice(0,3) 
 
 		// recover original secret
-		var original_secret = shamir.recover_secret(secret_shares_subset)
+		var original_secret = shamir.recover(secret_shares_subset)
 
 		console.log(original_secret)
 		/*
@@ -80,7 +80,9 @@ Package has 2 features (functions):
 		*/
 	```
 
-	Since this is unpolished implementation, secret can only be of type string and no longer than 16 characters
+	~~Since this is unpolished implementation, secret can only be of type string and no longer than 16 characters~~
+	
+	Secret is still of type string, but now it can be of arbitrary length and you can use utf-8 characters (tested on Croatian diacritics) 
 	
 	
 
