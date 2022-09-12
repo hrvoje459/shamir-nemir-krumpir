@@ -45,7 +45,10 @@ function recover(secret_shards) {
 }
 
 function share(secret, threshold, total_shares) {
-
+	console.log("Iz shamira")
+	console.log(secret)
+	console.log(threshold)
+	console.log(total_shares)
 	secret = Buffer.from(secret, "utf-8").toString('hex')
 
 	var split_secret = []
