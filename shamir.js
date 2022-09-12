@@ -38,8 +38,9 @@ function recover(secret_shards) {
 		var recovered_chunk = recover_secret(secret_shards, x_coords, y_coords, modulus = PRIME)
 		recovered_secret += recovered_chunk
 	}
-	console.log(recovered_secret)
+	//console.log(recovered_secret)
 
+	return recover_secret
 
 }
 
