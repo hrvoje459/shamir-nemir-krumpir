@@ -14,7 +14,7 @@
     <a href="https://github.com/hrvoje459/shamir-nemir-krumpir"><strong>Explore the documentation</strong></a>
     <br />
     <br />
-    <a href="https://demo.firefly-iii.org/">View the demo</a>
+    <a href="https://shamir.hrvojeneedsadomain.tk/">View the demo</a>
     ·
     <a href="https://github.com/hrvoje459/shamir-nemir-krumpir/issues">Report a bug</a>
     ·
@@ -43,7 +43,7 @@ This repository contains code for algorithms implementation in vanilla javascrip
 This package and implementation was made as an exercise in programming and for better understanding of Shamir's secret sharing algorithm. 
 <br/><br/>
 <a href="https://www.vaultproject.io/" target="_blank"><img src="https://www.datocms-assets.com/2885/1620155126-brandhcvaultprimaryattributedcolorwhite.svg"/></a>
-Apart from sharing secrets, Shamir's secret sharing can also be used for securing apps and services, notable example is Hashicorp Vault  which has Seal/Unseal functionality (something like a lockdown for applications which triggers when host is restarted or Vault initialises it), when Vault is in its "sealed" state it requires that threshold of key shares is provided for it to unseals, key shares are initially generated using Shamir's secret sharing algorithm. More on that in official [documentation](https://www.vaultproject.io/docs/concepts/seal).
+Apart from sharing secrets, Shamir's secret sharing can also be used for securing apps and services, notable example is Hashicorp Vault  which has Seal/Unseal functionality (something like a lockdown for applications which triggers when host is restarted or Vault initialises it), when Vault is in its "sealed" state it requires that threshold of key shares is provided for it to unseal, key shares are initially generated using Shamir's secret sharing algorithm. More on that in official [documentation](https://www.vaultproject.io/docs/concepts/seal).
 
 
 ## Features
@@ -102,7 +102,7 @@ and require it in your Node.js application:
 Then you just use exported functions as described in [Features](#features)
 
 
-1. There is a [bit će demo site](https://link_na_demo.org) that you can use to generate secret shares from secret
+1. There is a [demo site](https://shamir.hrvojeneedsadomain.tk/) that you can use to test out secret sharing
 
 
 
@@ -110,5 +110,5 @@ Then you just use exported functions as described in [Features](#features)
 
 ## License
 
-This work [is licensed](https://link_na_moj_github.com/LICENSE.md) under the [MIT License](https://choosealicense.com/licenses/mit/).
+This work [is licensed](https://github.com/hrvoje459/shamir-nemir-krumpir/blob/main/LICENSE.md) under the [MIT License](https://choosealicense.com/licenses/mit/).
 

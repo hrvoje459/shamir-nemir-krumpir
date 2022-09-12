@@ -1,6 +1,6 @@
 {
 	"name": "shamir-nemir-krumpir",
-	"version": "1.1.6",
+	"version": "1.1.8",
 	"description": "Shamir's Secret Sharing",
 	"main": "shamir.js",
 	"scripts": {
