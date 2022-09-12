@@ -40,7 +40,7 @@ function recover(secret_shards) {
 	}
 	//console.log(recovered_secret)
 
-	return recover_secret
+	return recovered_secret
 
 }
 
